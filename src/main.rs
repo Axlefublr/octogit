@@ -7,6 +7,7 @@ use colorizer::colorize;
 mod args;
 mod parser;
 mod colorizer;
+mod git;
 
 fn main() {
 	let args = Args::parse();
