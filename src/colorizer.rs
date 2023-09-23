@@ -3,19 +3,19 @@ use ansi_term::Color;
 
 use crate::parser::Stats;
 
-mod colors;
+mod default_colors;
 mod glyphs;
 
 pub fn colorize(stat: Stats) -> Vec<ANSIString<'static>> {
 	let mut elements: Vec<ANSIString<'static>> = vec![];
-	add_if_positive(&mut elements, colors::YELLOW, glyphs::UNPUSHED, stat.unpushed);
-	add_if_positive(&mut elements, colors::GREEN, glyphs::RENAMED, stat.renamed);
-	add_if_positive(&mut elements, colors::GREEN, glyphs::ADDED, stat.added);
-	add_if_positive(&mut elements, colors::GREEN, glyphs::DELETED, stat.staged_deleted);
-	add_if_positive(&mut elements, colors::GREEN, glyphs::STAGED, stat.staged);
-	add_if_positive(&mut elements, colors::CYAN, glyphs::MODIFIED, stat.modified);
-	add_if_positive(&mut elements, colors::CYAN, glyphs::DELETED, stat.deleted);
-	add_if_positive(&mut elements, colors::CYAN, glyphs::UNSTAGED, stat.unstaged);
+	add_if_positive(&mut elements, default_colors::YELLOW, glyphs::UNPUSHED, stat.unpushed);
+	add_if_positive(&mut elements, default_colors::GREEN, glyphs::RENAMED, stat.renamed);
+	add_if_positive(&mut elements, default_colors::GREEN, glyphs::ADDED, stat.added);
+	add_if_positive(&mut elements, default_colors::GREEN, glyphs::DELETED, stat.staged_deleted);
+	add_if_positive(&mut elements, default_colors::GREEN, glyphs::STAGED, stat.staged);
+	add_if_positive(&mut elements, default_colors::CYAN, glyphs::MODIFIED, stat.modified);
+	add_if_positive(&mut elements, default_colors::CYAN, glyphs::DELETED, stat.deleted);
+	add_if_positive(&mut elements, default_colors::CYAN, glyphs::UNSTAGED, stat.unstaged);
 	elements
 }
 
