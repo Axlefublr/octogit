@@ -26,7 +26,7 @@ pub fn status() -> Result<String, String> {
 	}
 }
 
-pub fn remote() -> Result<String, String> {
+fn remote() -> Result<String, String> {
 	let output = match Command::new("git")
 		.arg("remote")
 		.output()
@@ -51,7 +51,7 @@ pub fn remote() -> Result<String, String> {
 	Ok(remote)
 }
 
-pub fn branch() -> Result<String, String> {
+fn branch() -> Result<String, String> {
 	let output = match Command::new("git")
 		.arg("branch")
 		.arg("--show-current")
@@ -75,4 +75,34 @@ pub fn branch() -> Result<String, String> {
 	} else {
 		Ok(branch)
 	}
+}
+
+fn log(remote: &str, branch: &str) -> Result<String, String> {
+	let output = match Command::new("git")
+		.arg("log")
+		.arg("--oneline")
+		.arg(format!("{0}/{1}..{1}", remote, branch))
+		.output()
+	{
+		Err(_) => return Err("`git` is not in your $PATH".to_owned()),
+		Ok(v) => v,
+	};
+	if !output.status.success() {
+		return Err(String::from_utf8(output.stderr)
+			.expect("git log stderr should convert to a string")
+			.trim()
+			.to_owned());
+	}
+	let log = String::from_utf8(output.stdout)
+		.expect("git log failed to convert to a string")
+		.trim()
+		.to_owned();
+	Ok(log)
+}
+pub fn get_unpushed() -> Result<usize, String> {
+	let remote = remote()?;
+	let branch = branch()?;
+	let log = log(&remote, &branch)?;
+	let commits: usize = log.lines().count();
+	Ok(commits)
 }
