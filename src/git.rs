@@ -47,3 +47,28 @@ pub fn status() -> Result<String, String> {
 		Ok(git_status)
 	}
 }
+
+pub fn remote() -> Result<String, String> {
+	let output = match Command::new("git")
+		.arg("remote")
+		.output()
+	{
+		Err(_) => return Err("`git` is not in your $PATH".to_owned()),
+		Ok(v) => v,
+	};
+	if !output.status.success() {
+		return Err(String::from_utf8(output.stderr)
+			.expect("git remote stderr should convert to a string")
+			.trim()
+			.to_owned());
+	}
+	let remote = String::from_utf8(output.stdout)
+		.expect("git remote failed to convert to a string")
+		.trim_end()
+		.to_owned();
+	if remote.is_empty() {
+		return Err("this repository doesn't have a remote".to_owned());
+	}
+	let remote = remote.lines().next().expect("if remote isn't empty, it should be at least one line").to_owned();
+	Ok(remote)
+}
