@@ -1,5 +1,3 @@
-﻿use crate::args::Args;
-
 #[derive(Debug)]
 pub struct Stats {
 	pub unpushed: usize,
@@ -22,7 +20,7 @@ impl Stats {
 			renamed: 0,
 			deleted: 0,
 			unpushed: 0,
-			staged_deleted: 0
+			staged_deleted: 0,
 		}
 	}
 	pub fn compute(git_status: String, unpushed: usize) -> Option<Self> {

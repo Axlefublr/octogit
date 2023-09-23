@@ -1,0 +1,2 @@
+Initial working release.
+You can't pick colors or the ordering, but if you're fine with the defaults, you can already safely use the program

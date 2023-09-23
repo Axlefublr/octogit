@@ -23,10 +23,7 @@ pub fn status() -> Result<String, String> {
 }
 
 fn remote() -> Result<String, String> {
-	let output = match Command::new("git")
-		.arg("remote")
-		.output()
-	{
+	let output = match Command::new("git").arg("remote").output() {
 		Err(_) => return Err("`git` is not in your $PATH".to_owned()),
 		Ok(v) => v,
 	};
@@ -43,7 +40,11 @@ fn remote() -> Result<String, String> {
 	if remote.is_empty() {
 		return Err("this repository doesn't have a remote".to_owned());
 	}
-	let remote = remote.lines().next().expect("if remote isn't empty, it should be at least one line").to_owned();
+	let remote = remote
+		.lines()
+		.next()
+		.expect("if remote isn't empty, it should be at least one line")
+		.to_owned();
 	Ok(remote)
 }
 
@@ -67,7 +68,7 @@ fn branch() -> Result<String, String> {
 		.trim()
 		.to_owned();
 	if branch.is_empty() {
-		return Err("this repository isn't on a branch".to_owned());
+		Err("this repository isn't on a branch".to_owned())
 	} else {
 		Ok(branch)
 	}

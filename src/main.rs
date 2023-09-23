@@ -1,15 +1,13 @@
-use std::process::ExitCode;
-
-use clap::Parser;
 use ansi_term::ANSIStrings;
-use args::Args as Args;
-use parser::Stats as Stats;
+use args::Args;
+use clap::Parser;
 use colorizer::colorize;
+use parser::Stats;
 
 mod args;
-mod parser;
 mod colorizer;
 mod git;
+mod parser;
 
 fn main() {
 	let args = Args::parse();

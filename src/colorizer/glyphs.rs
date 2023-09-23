@@ -1,4 +1,4 @@
-﻿pub const UNPUSHED: char = '';
+pub const UNPUSHED: char = '';
 pub const RENAMED: char = '󰹹';
 pub const ADDED: char = '+';
 pub const STAGED: char = '󰄬';
