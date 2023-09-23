@@ -25,12 +25,12 @@ impl Stats {
 			staged_deleted: 0
 		}
 	}
-	pub fn from(args: Args) -> Option<Self> {
+	pub fn compute(git_status: String, unpushed: usize) -> Option<Self> {
 		let mut stats = Stats::new();
-		if args.status.is_some() {
-			parse_status(&args, &mut stats)?;
+		if !git_status.is_empty() {
+			parse_status(git_status, &mut stats)?;
 		}
-		stats.unpushed = args.unpushed;
+		stats.unpushed = unpushed;
 		if are_all_zero(&stats) {
 			None
 		} else {
@@ -39,8 +39,8 @@ impl Stats {
 	}
 }
 
-fn parse_status(args: &Args, stats: &mut Stats) -> Option<()> {
-	for line in args.status.as_ref().unwrap().lines() {
+fn parse_status(git_status: String, stats: &mut Stats) -> Option<()> {
+	for line in git_status.lines() {
 		let mut chars = line.chars();
 		let first = chars.next()?;
 		match first {

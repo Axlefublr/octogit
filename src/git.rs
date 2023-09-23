@@ -19,11 +19,7 @@ pub fn status() -> Result<String, String> {
 		.expect("git status --porcelain failed to convert to a string")
 		.trim_end()
 		.to_owned();
-	if git_status.is_empty() {
-		Err("there are no git changes in this directory".to_owned())
-	} else {
-		Ok(git_status)
-	}
+	Ok(git_status)
 }
 
 fn remote() -> Result<String, String> {
