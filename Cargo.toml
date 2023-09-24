@@ -14,3 +14,4 @@ repository = "https://github.com/Axlefublr/octussy"
 [dependencies]
 ansi_term = "0.12.1"
 clap = { version = "4.3.19", features = ["derive"] }
+hex = "0.4.3"

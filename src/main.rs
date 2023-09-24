@@ -1,20 +1,21 @@
 use ansi_term::ANSIStrings;
 use args::Args;
 use clap::Parser;
-use colorizer::colorize;
+use constructor::construct;
 use parser::Stats;
 
 mod args;
-mod colorizer;
 mod git;
 mod parser;
+mod constructor;
 
 fn main() {
 	let args = Args::parse();
+	let verbose = args.verbose;
 	let git_status = match git::status() {
 		Ok(status) => status,
 		Err(message) => {
-			if args.verbose {
+			if verbose {
 				eprintln!("{}", message);
 			}
 			String::from("")
@@ -23,7 +24,7 @@ fn main() {
 	let unpushed = match git::get_unpushed() {
 		Ok(unpushed) => unpushed,
 		Err(message) => {
-			if args.verbose {
+			if verbose {
 				eprintln!("{}", message);
 			}
 			0
@@ -31,7 +32,10 @@ fn main() {
 	};
 	let stats = Stats::compute(git_status, unpushed);
 	if let Some(stats) = stats {
-		let elements = colorize(stats);
+		let (elements, user_errors) = construct(stats, args);
+		if !user_errors.is_empty() && verbose {
+			eprintln!("{}", user_errors.join("\n"));
+		}
 		print!("{}", ANSIStrings(&elements));
 	}
 }
