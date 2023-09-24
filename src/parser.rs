@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Stats {
 	pub unpushed: usize,
 	pub unstaged: usize,
@@ -11,20 +11,8 @@ pub struct Stats {
 }
 
 impl Stats {
-	fn new() -> Self {
-		Self {
-			unstaged: 0,
-			added: 0,
-			staged: 0,
-			modified: 0,
-			renamed: 0,
-			deleted: 0,
-			unpushed: 0,
-			staged_deleted: 0,
-		}
-	}
 	pub fn compute(git_status: String, unpushed: usize) -> Option<Self> {
-		let mut stats = Stats::new();
+		let mut stats = Stats::default();
 		if !git_status.is_empty() {
 			parse_status(git_status, &mut stats)?;
 		}
