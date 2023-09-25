@@ -5,9 +5,9 @@ use constructor::construct;
 use parser::Stats;
 
 mod args;
+mod constructor;
 mod git;
 mod parser;
-mod constructor;
 
 fn main() {
 	let args = Args::parse();

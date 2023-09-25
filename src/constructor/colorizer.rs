@@ -1,43 +1,33 @@
 use ansi_term::Color;
-use clap::error;
+
+use crate::args::UserColors;
 
 mod default;
 
 pub struct ChosenColors {
 	pub unpushed: Color,
-	pub unstaged: Color,
+	pub renamed: Color,
 	pub added: Color,
 	pub staged: Color,
-	pub modified: Color,
-	pub renamed: Color,
-	pub deleted: Color,
 	pub staged_deleted: Color,
+	pub modified: Color,
+	pub deleted: Color,
+	pub unstaged: Color,
 }
 
 impl ChosenColors {
-	pub fn from(
-		unpushed: Option<String>,
-		all_staged: Option<String>,
-		all_unstaged: Option<String>,
-		unstaged: Option<String>,
-		deleted: Option<String>,
-		modified: Option<String>,
-		added: Option<String>,
-		staged: Option<String>,
-		renamed: Option<String>,
-		staged_deleted: Option<String>,
-	) -> (Self, Vec<String>) {
+	pub fn from(user: UserColors) -> (Self, Vec<String>) {
 		let mut errors = vec![];
-		let unpushed = handle_color(unpushed, default::YELLOW, &mut errors);
-		let all_staged = handle_color(all_staged, default::GREEN, &mut errors);
-		let all_unstaged = handle_color(all_unstaged, default::CYAN, &mut errors);
-		let unstaged = handle_color(unstaged, all_unstaged, &mut errors);
-		let deleted = handle_color(deleted, all_unstaged, &mut errors);
-		let modified = handle_color(modified, all_unstaged, &mut errors);
-		let added = handle_color(added, all_staged, &mut errors);
-		let staged = handle_color(staged, all_staged, &mut errors);
-		let renamed = handle_color(renamed, all_staged, &mut errors);
-		let staged_deleted = handle_color(staged_deleted, all_staged, &mut errors);
+		let unpushed = handle_color(user.unpushed, default::YELLOW, &mut errors);
+		let all_staged = handle_color(user.all_staged, default::GREEN, &mut errors);
+		let all_unstaged = handle_color(user.all_unstaged, default::CYAN, &mut errors);
+		let unstaged = handle_color(user.unstaged, all_unstaged, &mut errors);
+		let deleted = handle_color(user.deleted, all_unstaged, &mut errors);
+		let modified = handle_color(user.modified, all_unstaged, &mut errors);
+		let added = handle_color(user.added, all_staged, &mut errors);
+		let staged = handle_color(user.staged, all_staged, &mut errors);
+		let renamed = handle_color(user.renamed, all_staged, &mut errors);
+		let staged_deleted = handle_color(user.staged_deleted, all_staged, &mut errors);
 		let chosen = Self {
 			unpushed,
 			unstaged,
@@ -46,7 +36,7 @@ impl ChosenColors {
 			modified,
 			renamed,
 			deleted,
-			staged_deleted
+			staged_deleted,
 		};
 		(chosen, errors)
 	}
@@ -55,7 +45,7 @@ impl ChosenColors {
 fn handle_color(color: Option<String>, default: Color, errors: &mut Vec<String>) -> Color {
 	let color = match color {
 		Some(color) => color,
-		None => return default
+		None => return default,
 	};
 	match parse_color(color) {
 		Ok(color) => color,
@@ -83,7 +73,7 @@ fn parse_color(color: String) -> Result<Color, String> {
 			let err_msg = Err(format!("hex color specified is incorrect: `{}`", &hex));
 			let (red, green, blue) = match parse_hex(hex) {
 				Some(rgb) => rgb,
-				None => return err_msg
+				None => return err_msg,
 			};
 			Ok(Color::RGB(red, green, blue))
 		}
