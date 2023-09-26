@@ -23,6 +23,19 @@ impl Stats {
 			Some(stats)
 		}
 	}
+
+	pub fn one() -> Self {
+		Self {
+			unpushed: 1,
+			unstaged: 1,
+			added: 1,
+			staged: 1,
+			modified: 1,
+			renamed: 1,
+			deleted: 1,
+			staged_deleted: 1,
+		}
+	}
 }
 
 fn parse_status(git_status: String, stats: &mut Stats) -> Option<()> {

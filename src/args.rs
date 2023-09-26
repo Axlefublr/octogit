@@ -15,6 +15,11 @@ pub struct Args {
 	/// You can see both the nerd and ascii defaults for every category later down in this help.
 	#[arg(long)]
 	pub ascii_symbols: bool,
+	/// Will print every single element.
+	///
+	/// Helpful for testing the output without having to be in a git directory with certain changes.
+	#[arg(long)]
+	pub test: bool,
 
 	/// [default: yellow]
 	///

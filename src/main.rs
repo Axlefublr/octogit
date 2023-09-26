@@ -29,7 +29,11 @@ fn main() {
 			0
 		}
 	};
-	let stats = Stats::compute(git_status, unpushed);
+	let stats = if args.test {
+		Some(Stats::one())
+	} else {
+		Stats::compute(git_status, unpushed)
+	};
 	if let Some(stats) = stats {
 		let (elements, user_errors) = constructor::construct(stats, args);
 		if !user_errors.is_empty() && verbose {
