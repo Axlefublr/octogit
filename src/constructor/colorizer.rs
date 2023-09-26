@@ -1,6 +1,5 @@
 use ansi_term::Color;
-
-use crate::args::UserColors;
+use super::input::UserColors;
 
 mod default;
 
@@ -21,22 +20,22 @@ impl ChosenColors {
 		let unpushed = handle_color(user.unpushed, default::YELLOW, &mut errors);
 		let all_staged = handle_color(user.all_staged, default::GREEN, &mut errors);
 		let all_unstaged = handle_color(user.all_unstaged, default::CYAN, &mut errors);
-		let unstaged = handle_color(user.unstaged, all_unstaged, &mut errors);
-		let deleted = handle_color(user.deleted, all_unstaged, &mut errors);
-		let modified = handle_color(user.modified, all_unstaged, &mut errors);
+		let renamed = handle_color(user.renamed, all_staged, &mut errors);
 		let added = handle_color(user.added, all_staged, &mut errors);
 		let staged = handle_color(user.staged, all_staged, &mut errors);
-		let renamed = handle_color(user.renamed, all_staged, &mut errors);
 		let staged_deleted = handle_color(user.staged_deleted, all_staged, &mut errors);
+		let modified = handle_color(user.modified, all_unstaged, &mut errors);
+		let deleted = handle_color(user.deleted, all_unstaged, &mut errors);
+		let unstaged = handle_color(user.unstaged, all_unstaged, &mut errors);
 		let chosen = Self {
 			unpushed,
-			unstaged,
+			renamed,
 			added,
 			staged,
-			modified,
-			renamed,
-			deleted,
 			staged_deleted,
+			modified,
+			deleted,
+			unstaged,
 		};
 		(chosen, errors)
 	}

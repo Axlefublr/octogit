@@ -1,39 +1,65 @@
 use self::colorizer::ChosenColors;
 use self::glyphizer::ChosenGlyphs;
 use crate::args::Args;
-use crate::args::UserColors;
-use crate::args::UserGlyphs;
 use crate::parser::Stats;
 use ansi_term::ANSIString;
 use ansi_term::Color;
+use self::input::UserColors;
+use self::input::UserGlyphs;
 
 mod colorizer;
-pub mod glyphizer;
+mod glyphizer;
+mod input {
+	pub struct UserColors {
+		pub unpushed: Option<String>,
+		pub all_staged: Option<String>,
+		pub all_unstaged: Option<String>,
+		pub renamed: Option<String>,
+		pub added: Option<String>,
+		pub staged: Option<String>,
+		pub staged_deleted: Option<String>,
+		pub modified: Option<String>,
+		pub deleted: Option<String>,
+		pub unstaged: Option<String>,
+	}
+
+	pub struct UserGlyphs {
+		pub ascii_symbols: bool,
+		pub unpushed: Option<String>,
+		pub renamed: Option<String>,
+		pub added: Option<String>,
+		pub staged: Option<String>,
+		pub staged_deleted: Option<String>,
+		pub modified: Option<String>,
+		pub deleted: Option<String>,
+		pub unstaged: Option<String>,
+	}
+}
 
 pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<String>) {
 	let mut elements: Vec<ANSIString<'static>> = vec![];
 	let (colors, user_errors) = ChosenColors::from(UserColors {
-		unpushed: args.unpushed_color,
-		all_staged: args.all_staged_color,
-		all_unstaged: args.all_unstaged_color,
-		renamed: args.renamed_color,
-		added: args.added_color,
-		staged: args.staged_color,
-		staged_deleted: args.staged_deleted_color,
-		modified: args.modified_color,
-		deleted: args.deleted_color,
-		unstaged: args.unstaged_color,
+		unpushed: args.color_unpushed,
+		all_staged: args.color_all_staged,
+		all_unstaged: args.color_all_unstaged,
+		renamed: args.color_renamed,
+		added: args.color_added,
+		staged: args.color_staged,
+		staged_deleted: args.color_staged_deleted,
+		modified: args.color_modified,
+		deleted: args.color_deleted,
+		unstaged: args.color_unstaged,
 	});
 	let glyphs = ChosenGlyphs::from(UserGlyphs {
 		ascii_symbols: args.ascii_symbols,
-		unpushed: args.unpushed_symbol,
-		renamed: args.renamed_symbol,
-		added: args.added_symbol,
-		staged: args.staged_symbol,
-		staged_deleted: args.staged_deleted_symbol,
-		modified: args.modified_symbol,
-		deleted: args.deleted_symbol,
-		unstaged: args.unstaged_symbol,
+		unpushed: args.symbol_unpushed,
+		renamed: args.symbol_renamed,
+		added: args.symbol_added,
+		staged: args.symbol_staged,
+		staged_deleted: args.symbol_staged_deleted,
+		modified: args.symbol_modified,
+		deleted: args.symbol_deleted,
+		unstaged: args.symbol_unstaged,
 	});
 	add_if_positive(
 		&mut elements,

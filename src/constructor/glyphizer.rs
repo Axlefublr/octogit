@@ -1,4 +1,4 @@
-use crate::args::UserGlyphs;
+use super::input::UserGlyphs;
 
 mod default;
 
@@ -81,10 +81,26 @@ fn handle_glyph(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::args::UserGlyphs;
+	use super::super::input::UserGlyphs;
+
+	impl UserGlyphs {
+		fn none(ascii_symbols: bool) -> Self {
+			Self {
+				ascii_symbols,
+				unpushed: None,
+				renamed: None,
+				added: None,
+				staged: None,
+				staged_deleted: None,
+				modified: None,
+				deleted: None,
+				unstaged: None,
+			}
+		}
+	}
 
 	#[test]
-	fn glyphizer_nerd() {
+	fn nerd() {
 		let chosen = ChosenGlyphs::from(UserGlyphs::none(false));
 		assert_eq!(default::UNPUSHED_NERD.to_string(), chosen.unpushed);
 		assert_eq!(default::RENAMED_NERD.to_string(), chosen.renamed);
@@ -97,7 +113,7 @@ mod tests {
 	}
 
 	#[test]
-	fn glyphizer_ascii() {
+	fn ascii() {
 		let chosen = ChosenGlyphs::from(UserGlyphs::none(true));
 		assert_eq!(default::UNPUSHED.to_string(), chosen.unpushed);
 		assert_eq!(default::RENAMED.to_string(), chosen.renamed);

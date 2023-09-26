@@ -1,7 +1,6 @@
 use ansi_term::ANSIStrings;
 use args::Args;
 use clap::Parser;
-use constructor::construct;
 use parser::Stats;
 
 mod args;
@@ -32,7 +31,7 @@ fn main() {
 	};
 	let stats = Stats::compute(git_status, unpushed);
 	if let Some(stats) = stats {
-		let (elements, user_errors) = construct(stats, args);
+		let (elements, user_errors) = constructor::construct(stats, args);
 		if !user_errors.is_empty() && verbose {
 			eprintln!("{}", user_errors.join("\n"));
 		}

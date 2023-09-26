@@ -17,100 +17,66 @@ pub struct Args {
 	pub ascii_symbols: bool,
 
 	/// [default: yellow]
+	///
+	/// For every color, you can either specify one of the main 8 colors from your terminal color scheme:
+	///
+	/// black, red, green, yellow, blue, purple, cyan, white
+	///
+	/// Or a hex code, without the # symbol like: FFAFD7
+	///
+	/// For both hex codes and color names, the cAsE doesn't matter
 	#[arg(long)]
-	pub unpushed_color: Option<String>,
+	pub color_unpushed: Option<String>,
 	/// [default: green]
 	#[arg(long)]
-	pub all_staged_color: Option<String>,
+	pub color_all_staged: Option<String>,
 	/// [default: cyan]
 	#[arg(long)]
-	pub all_unstaged_color: Option<String>,
-	/// [default: all_staged_color]
+	pub color_all_unstaged: Option<String>,
+	/// [default: --color-all-staged]
 	#[arg(long)]
-	pub renamed_color: Option<String>,
-	/// [default: all_staged_color]
+	pub color_renamed: Option<String>,
+	/// [default: --color-all-staged]
 	#[arg(long)]
-	pub added_color: Option<String>,
-	/// [default: all_staged_color]
+	pub color_added: Option<String>,
+	/// [default: --color-all-staged]
 	#[arg(long)]
-	pub staged_color: Option<String>,
-	/// [default: all_staged_color]
+	pub color_staged: Option<String>,
+	/// [default: --color-all-staged]
 	#[arg(long)]
-	pub staged_deleted_color: Option<String>,
-	/// [default: all_unstaged_color]
+	pub color_staged_deleted: Option<String>,
+	/// [default: --color-all-unstaged]
 	#[arg(long)]
-	pub modified_color: Option<String>,
-	/// [default: all_unstaged_color]
+	pub color_modified: Option<String>,
+	/// [default: --color-all-unstaged]
 	#[arg(long)]
-	pub deleted_color: Option<String>,
-	/// [default: all_unstaged_color]
+	pub color_deleted: Option<String>,
+	/// [default: --color-all-unstaged]
 	#[arg(long)]
-	pub unstaged_color: Option<String>,
+	pub color_unstaged: Option<String>,
 
 	/// [default:  or >]
 	#[arg(long)]
-	pub unpushed_symbol: Option<String>,
+	pub symbol_unpushed: Option<String>,
 	/// [default: 󰹹 or &]
 	#[arg(long)]
-	pub renamed_symbol: Option<String>,
+	pub symbol_renamed: Option<String>,
 	/// [default: +]
 	#[arg(long)]
-	pub added_symbol: Option<String>,
+	pub symbol_added: Option<String>,
 	/// [default: 󰄬 or *]
 	#[arg(long)]
-	pub staged_symbol: Option<String>,
+	pub symbol_staged: Option<String>,
 	/// [default:  or ×]
 	#[arg(long)]
-	pub staged_deleted_symbol: Option<String>,
+	pub symbol_staged_deleted: Option<String>,
 	/// [default: !]
 	#[arg(long)]
-	pub modified_symbol: Option<String>,
+	pub symbol_modified: Option<String>,
 	/// [default:  or ×]
 	#[arg(long)]
-	pub deleted_symbol: Option<String>,
+	pub symbol_deleted: Option<String>,
 	/// [default: ?]
 	#[arg(long)]
-	pub unstaged_symbol: Option<String>,
-}
-
-pub struct UserColors {
-	pub unpushed: Option<String>,
-	pub all_staged: Option<String>,
-	pub all_unstaged: Option<String>,
-	pub renamed: Option<String>,
-	pub added: Option<String>,
-	pub staged: Option<String>,
-	pub staged_deleted: Option<String>,
-	pub modified: Option<String>,
-	pub deleted: Option<String>,
-	pub unstaged: Option<String>,
-}
-
-pub struct UserGlyphs {
-	pub ascii_symbols: bool,
-	pub unpushed: Option<String>,
-	pub renamed: Option<String>,
-	pub added: Option<String>,
-	pub staged: Option<String>,
-	pub staged_deleted: Option<String>,
-	pub modified: Option<String>,
-	pub deleted: Option<String>,
-	pub unstaged: Option<String>,
-}
-
-impl UserGlyphs {
-	#[allow(dead_code)] // because it *is* actually used in crate::glyphizer::tests, but isn't recognized as being used for some reason
-	pub fn none(ascii_symbols: bool) -> Self {
-		Self {
-			ascii_symbols,
-			unpushed: None,
-			renamed: None,
-			added: None,
-			staged: None,
-			staged_deleted: None,
-			modified: None,
-			deleted: None,
-			unstaged: None,
-		}
-	}
+	pub symbol_unstaged: Option<String>,
 }
