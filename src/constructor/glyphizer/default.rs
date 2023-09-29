@@ -1,6 +1,6 @@
 pub const UNPUSHED_NERD: char = '';
 pub const UNPUSHED: char = '>';
-pub const RENAMED_NERD: char = '󰹹';
+pub const RENAMED_NERD: char = '';
 pub const RENAMED: char = '&';
 pub const ADDED: char = '+';
 pub const STAGED_NERD: char = '󰄬';
