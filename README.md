@@ -13,7 +13,7 @@ function fish_prompt
 end
 ```
 
-By default, octussy will print this output to stdout (if you had every single type of change in your current git directory), without a newline at the end:
+By default, octussy will print this output to stdout (if you had every single type of change in your current git directory), with a space but not a newline at the end:
 
 `octussy --test`
 
@@ -21,14 +21,16 @@ By default, octussy will print this output to stdout (if you had every single ty
 
 The meanings of every element in order:
 
+1. Stashes
+1. Commits you fetched but haven't pulled
 1. Commits you haven't yet pushed to the remote
-2. Staged renamed files
-3. Staged modifications
-4. Staged new files
-5. Staged deletions
-6. Unstaged modifications
-7. Unstaged new files
-8. Unstaged deletions
+1. Staged renamed files
+1. Staged modifications
+1. Staged new files
+1. Staged deletions
+1. Unstaged modifications
+1. Unstaged new files
+1. Unstaged deletions
 
 It uses nerd font symbols for some of the elements.
 
@@ -40,9 +42,9 @@ If you don't want to use a nerd font, use the `--ascii-symbols` flag:
 
 Only the elements that are at least one are printed, making testing how octussy fully looks kinda annoying. That's why the `--test` flag exists – you get to see the entire output of octussy regardless of how many changes your current git directory actually has.
 
-By default, unpushed commits are shown in yellow, staged changes in green, and unstaged changes in cyan, following your terminal's color scheme.
+By default, commits (stashes, unpulled, unpushed) are shown in yellow, staged changes in green, and unstaged changes in cyan, following your terminal's color scheme.
 
-You can change each category's default to either one of these 8 colors:
+You can change each category's default to any one of these 8 colors:
 
 black, red, green, yellow, blue, purple, cyan, white
 
@@ -60,13 +62,13 @@ You can then override the default for specific elements, if you want to: `octuss
 
 ![](img/unstaged-blue-deleted-red.png)
 
-Same thing applies to the glyphs used: `octussy --symbol-unpushed 󰤇 --symbol-deleted 󱇪`
+Same thing applies to the [glyphs used](https://www.nerdfonts.com/cheat-sheet): `octussy --symbol-unpushed 󰤇 --symbol-deleted 󱇪`
 
 ![](img/symbol-rabbit-unpushed-spider-deleted.png)
 
-Interestingly, you're not restricted to a single character. So it could be a whole word, if you want to!: `octussy --symbol-unpushed commits`
+Interestingly, you're not restricted to a single character. So it could be a whole word, if you want to!: `octussy --symbol-unpushed meow`
 
-![](img/unpushed-commits-word.png)
+![](img/unpushed-custom-word.png)
 
 A similar thing happens for colors: `octussy --color-staged-deleted '87FF5F this is my brigher green that I want to use for this element'`
 
@@ -94,30 +96,30 @@ Usage: octussy [OPTIONS]
 Options:
   -v, --verbose
           octussy doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
-          
+
           When you do want to see the errors, use this flag.
 
       --ascii-symbols
           octussy uses nerd font symbols for some elements by default.
-          
+
           Use this flag if you don't use a nerd font.
-          
+
           You can see both the nerd and ascii defaults for every category later down in this help.
 
       --test
           Will print every single element.
-          
+
           Helpful for testing the output without having to be in a git directory with certain changes.
 
-      --color-unpushed <COLOR_UNPUSHED>
+      --color-all-commits <COLOR_ALL_COMMITS>
           [default: yellow]
-          
+
           For every color, you can either specify one of the main 8 colors from your terminal color scheme:
-          
+
           black, red, green, yellow, blue, purple, cyan, white
-          
+
           Or a hex code, without the # symbol like: FFAFD7
-          
+
           For both hex codes and color names, the cAsE doesn't matter
 
       --color-all-staged <COLOR_ALL_STAGED>
@@ -125,6 +127,15 @@ Options:
 
       --color-all-unstaged <COLOR_ALL_UNSTAGED>
           [default: cyan]
+
+      --color-stashed <COLOR_STASHED>
+          [default: --color-all-commits]
+
+      --color-unpulled <COLOR_UNPULLED>
+          [default: --color-all-commits]
+
+      --color-unpushed <COLOR_UNPUSHED>
+          [default: --color-all-commits]
 
       --color-renamed <COLOR_RENAMED>
           [default: --color-all-staged]
@@ -146,6 +157,12 @@ Options:
 
       --color-deleted <COLOR_DELETED>
           [default: --color-all-unstaged]
+
+      --symbol-stashed <SYMBOL_STASHED>
+          [default: 󰟫 or *]
+
+      --symbol-unpulled <SYMBOL_UNPULLED>
+          [default:  or <]
 
       --symbol-unpushed <SYMBOL_UNPUSHED>
           [default:  or >]
