@@ -31,13 +31,22 @@ pub struct Args {
 	///
 	/// For both hex codes and color names, the cAsE doesn't matter
 	#[arg(long)]
-	pub color_unpushed: Option<String>,
+	pub color_all_commits: Option<String>,
 	/// [default: green]
 	#[arg(long)]
 	pub color_all_staged: Option<String>,
 	/// [default: cyan]
 	#[arg(long)]
 	pub color_all_unstaged: Option<String>,
+	/// [default: --color-all-commits]
+	#[arg(long)]
+	pub color_stashed: Option<String>,
+	/// [default: --color-all-commits]
+	#[arg(long)]
+	pub color_unpulled: Option<String>,
+	/// [default: --color-all-commits]
+	#[arg(long)]
+	pub color_unpushed: Option<String>,
 	/// [default: --color-all-staged]
 	#[arg(long)]
 	pub color_renamed: Option<String>,
@@ -60,6 +69,12 @@ pub struct Args {
 	#[arg(long)]
 	pub color_deleted: Option<String>,
 
+	/// [default: 󰟫 or *]
+	#[arg(long)]
+	pub symbol_stashed: Option<String>,
+	/// [default:  or <]
+	#[arg(long)]
+	pub symbol_unpulled: Option<String>,
 	/// [default:  or >]
 	#[arg(long)]
 	pub symbol_unpushed: Option<String>,

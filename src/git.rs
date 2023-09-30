@@ -74,11 +74,30 @@ fn branch() -> Result<String, String> {
 	}
 }
 
-fn log(remote: &str, branch: &str) -> Result<String, String> {
+fn stashes() -> Result<usize, String> {
+	let output = match Command::new("git").arg("stash").arg("list").output() {
+		Err(_) => return Err("`git` is not in your $PATH".to_owned()),
+		Ok(v) => v,
+	};
+	if !output.status.success() {
+		return Err(String::from_utf8(output.stderr)
+			.expect("git stash stderr failed to convert to a string")
+			.trim()
+			.to_owned());
+	}
+	let stashes: usize = String::from_utf8(output.stdout)
+		.expect("git stash failed to convert to a string")
+		.trim()
+		.lines()
+		.count();
+	Ok(stashes)
+}
+
+fn rev_list(range: &str) -> Result<usize, String> {
 	let output = match Command::new("git")
-		.arg("log")
-		.arg("--oneline")
-		.arg(format!("{0}/{1}..{1}", remote, branch))
+		.arg("rev-list")
+		.arg("--count")
+		.arg(range)
 		.output()
 	{
 		Err(_) => return Err("`git` is not in your $PATH".to_owned()),
@@ -86,20 +105,34 @@ fn log(remote: &str, branch: &str) -> Result<String, String> {
 	};
 	if !output.status.success() {
 		return Err(String::from_utf8(output.stderr)
-			.expect("git log stderr should convert to a string")
+			.expect("git rev-list stderr failed to convert to a string")
 			.trim()
 			.to_owned());
 	}
-	let log = String::from_utf8(output.stdout)
-		.expect("git log failed to convert to a string")
+	let commits: usize = String::from_utf8(output.stdout)
+		.expect("git rev-list failed to convert to a string")
 		.trim()
-		.to_owned();
-	Ok(log)
+		.parse()
+		.expect("git rev-list failed to parse into an int");
+	Ok(commits)
 }
-pub fn get_unpushed() -> Result<usize, String> {
+
+#[derive(Default)]
+pub struct Commits {
+	pub unpulled: usize,
+	pub unpushed: usize,
+	pub stashes: usize,
+}
+
+pub fn get_commits() -> Result<Commits, String> {
 	let remote = remote()?;
 	let branch = branch()?;
-	let log = log(&remote, &branch)?;
-	let commits: usize = log.lines().count();
-	Ok(commits)
+	let unpulled = rev_list(&format!("{0}..{1}/{0}", &branch, &remote))?;
+	let unpushed = rev_list(&format!("{1}/{0}..{0}", &branch, &remote))?;
+	let stashes = stashes()?;
+	Ok(Commits {
+		stashes,
+		unpulled,
+		unpushed,
+	})
 }

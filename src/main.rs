@@ -1,6 +1,7 @@
 use ansi_term::ANSIStrings;
 use args::Args;
 use clap::Parser;
+use git::Commits;
 use parser::Stats;
 
 mod args;
@@ -20,19 +21,19 @@ fn main() {
 			String::from("")
 		}
 	};
-	let unpushed = match git::get_unpushed() {
-		Ok(unpushed) => unpushed,
+	let commits = match git::get_commits() {
+		Ok(commits) => commits,
 		Err(message) => {
 			if verbose {
 				eprintln!("{}", message);
 			}
-			0
+			Commits::default()
 		}
 	};
 	let stats = if args.test {
 		Some(Stats::one())
 	} else {
-		Stats::compute(git_status, unpushed)
+		Stats::compute(git_status, commits)
 	};
 	if let Some(stats) = stats {
 		let (elements, user_errors) = constructor::construct(stats, args);

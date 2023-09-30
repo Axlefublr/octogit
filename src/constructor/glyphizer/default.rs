@@ -1,7 +1,7 @@
-// pub const STASHES_NERD: char = '󰟫';
-// pub const STASHES: char = '*';
-// pub const UNPULLED_NERD: char = '';
-// pub const UNPULLED: char = '<';
+pub const STASHED_NERD: char = '󰟫';
+pub const STASHED: char = '*';
+pub const UNPULLED_NERD: char = '';
+pub const UNPULLED: char = '<';
 pub const UNPUSHED_NERD: char = '';
 pub const UNPUSHED: char = '>';
 pub const RENAMED_NERD: char = '󰕍';

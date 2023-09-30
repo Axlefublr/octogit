@@ -1,5 +1,9 @@
+use crate::git::Commits;
+
 #[derive(Debug, Default)]
 pub struct Stats {
+	pub stashed: usize,
+	pub unpulled: usize,
 	pub unpushed: usize,
 	pub unstaged: usize,
 	pub added: usize,
@@ -11,12 +15,14 @@ pub struct Stats {
 }
 
 impl Stats {
-	pub fn compute(git_status: String, unpushed: usize) -> Option<Self> {
+	pub fn compute(git_status: String, commits: Commits) -> Option<Self> {
 		let mut stats = Stats::default();
 		if !git_status.is_empty() {
 			parse_status(git_status, &mut stats)?;
 		}
-		stats.unpushed = unpushed;
+		stats.stashed = commits.stashes;
+		stats.unpulled = commits.unpulled;
+		stats.unpushed = commits.unpushed;
 		if are_all_zero(&stats) {
 			None
 		} else {
@@ -26,6 +32,8 @@ impl Stats {
 
 	pub fn one() -> Self {
 		Self {
+			stashed: 1,
+			unpulled: 1,
 			unpushed: 1,
 			unstaged: 1,
 			added: 1,
@@ -64,12 +72,14 @@ fn parse_status(git_status: String, stats: &mut Stats) -> Option<()> {
 }
 
 fn are_all_zero(stats: &Stats) -> bool {
-	stats.added == 0
-		&& stats.deleted == 0
-		&& stats.modified == 0
+	stats.stashed == 0
+		&& stats.unpulled == 0
+		&& stats.unpushed == 0
 		&& stats.renamed == 0
 		&& stats.staged == 0
-		&& stats.unpushed == 0
-		&& stats.unstaged == 0
+		&& stats.added == 0
 		&& stats.staged_deleted == 0
+		&& stats.modified == 0
+		&& stats.unstaged == 0
+		&& stats.deleted == 0
 }

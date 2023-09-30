@@ -3,6 +3,8 @@ use super::input::UserGlyphs;
 mod default;
 
 pub struct ChosenGlyphs {
+	pub stashed: String,
+	pub unpulled: String,
 	pub unpushed: String,
 	pub renamed: String,
 	pub staged: String,
@@ -15,6 +17,18 @@ pub struct ChosenGlyphs {
 
 impl ChosenGlyphs {
 	pub fn from(user: UserGlyphs) -> Self {
+		let stashed = handle_glyph(
+			user.stashed,
+			user.ascii_symbols,
+			default::STASHED,
+			default::STASHED_NERD,
+		);
+		let unpulled = handle_glyph(
+			user.unpulled,
+			user.ascii_symbols,
+			default::UNPULLED,
+			default::UNPULLED_NERD,
+		);
 		let unpushed = handle_glyph(
 			user.unpushed,
 			user.ascii_symbols,
@@ -64,6 +78,8 @@ impl ChosenGlyphs {
 			default::DELETED_NERD,
 		);
 		Self {
+			stashed,
+			unpulled,
 			unpushed,
 			renamed,
 			staged,
@@ -100,6 +116,8 @@ mod tests {
 		fn none(ascii_symbols: bool) -> Self {
 			Self {
 				ascii_symbols,
+				stashed: None,
+				unpulled: None,
 				unpushed: None,
 				renamed: None,
 				staged: None,
@@ -115,6 +133,8 @@ mod tests {
 	#[test]
 	fn nerd() {
 		let chosen = ChosenGlyphs::from(UserGlyphs::none(false));
+		assert_eq!(default::STASHED_NERD.to_string(), chosen.stashed);
+		assert_eq!(default::UNPULLED_NERD.to_string(), chosen.unpulled);
 		assert_eq!(default::UNPUSHED_NERD.to_string(), chosen.unpushed);
 		assert_eq!(default::RENAMED_NERD.to_string(), chosen.renamed);
 		assert_eq!(default::STAGED_NERD.to_string(), chosen.staged);
@@ -131,6 +151,8 @@ mod tests {
 	#[test]
 	fn ascii() {
 		let chosen = ChosenGlyphs::from(UserGlyphs::none(true));
+		assert_eq!(default::STASHED.to_string(), chosen.stashed);
+		assert_eq!(default::UNPULLED.to_string(), chosen.unpulled);
 		assert_eq!(default::UNPUSHED.to_string(), chosen.unpushed);
 		assert_eq!(default::RENAMED.to_string(), chosen.renamed);
 		assert_eq!(default::STAGED.to_string(), chosen.staged);

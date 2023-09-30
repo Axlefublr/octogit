@@ -4,6 +4,8 @@ use ansi_term::Color;
 mod default;
 
 pub struct ChosenColors {
+	pub stashed: Color,
+	pub unpulled: Color,
 	pub unpushed: Color,
 	pub renamed: Color,
 	pub staged: Color,
@@ -17,17 +19,27 @@ pub struct ChosenColors {
 impl ChosenColors {
 	pub fn from(user: UserColors) -> (Self, Vec<String>) {
 		let mut errors = vec![];
-		let unpushed = handle_color(user.unpushed, default::YELLOW, &mut errors);
+
+		let all_commits = handle_color(user.all_commits, default::YELLOW, &mut errors);
 		let all_staged = handle_color(user.all_staged, default::GREEN, &mut errors);
 		let all_unstaged = handle_color(user.all_unstaged, default::CYAN, &mut errors);
+
+		let stashed = handle_color(user.stashed, all_commits, &mut errors);
+		let unpulled = handle_color(user.unpulled, all_commits, &mut errors);
+		let unpushed = handle_color(user.unpushed, all_commits, &mut errors);
+
 		let renamed = handle_color(user.renamed, all_staged, &mut errors);
 		let staged = handle_color(user.staged, all_staged, &mut errors);
 		let added = handle_color(user.added, all_staged, &mut errors);
 		let staged_deleted = handle_color(user.staged_deleted, all_staged, &mut errors);
+
 		let modified = handle_color(user.modified, all_unstaged, &mut errors);
 		let unstaged = handle_color(user.unstaged, all_unstaged, &mut errors);
 		let deleted = handle_color(user.deleted, all_unstaged, &mut errors);
+
 		let chosen = Self {
+			stashed,
+			unpulled,
 			unpushed,
 			renamed,
 			staged,

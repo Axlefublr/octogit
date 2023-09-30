@@ -11,9 +11,12 @@ mod colorizer;
 mod glyphizer;
 mod input {
 	pub struct UserColors {
-		pub unpushed: Option<String>,
+		pub all_commits: Option<String>,
 		pub all_staged: Option<String>,
 		pub all_unstaged: Option<String>,
+		pub stashed: Option<String>,
+		pub unpulled: Option<String>,
+		pub unpushed: Option<String>,
 		pub renamed: Option<String>,
 		pub staged: Option<String>,
 		pub added: Option<String>,
@@ -25,6 +28,8 @@ mod input {
 
 	pub struct UserGlyphs {
 		pub ascii_symbols: bool,
+		pub stashed: Option<String>,
+		pub unpulled: Option<String>,
 		pub unpushed: Option<String>,
 		pub renamed: Option<String>,
 		pub staged: Option<String>,
@@ -39,9 +44,12 @@ mod input {
 pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<String>) {
 	let mut elements: Vec<ANSIString<'static>> = vec![];
 	let (colors, user_errors) = ChosenColors::from(UserColors {
-		unpushed: args.color_unpushed,
+		all_commits: args.color_all_commits,
 		all_staged: args.color_all_staged,
 		all_unstaged: args.color_all_unstaged,
+		stashed: args.color_stashed,
+		unpulled: args.color_unpulled,
+		unpushed: args.color_unpushed,
 		renamed: args.color_renamed,
 		staged: args.color_staged,
 		added: args.color_added,
@@ -52,6 +60,8 @@ pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<Stri
 	});
 	let glyphs = ChosenGlyphs::from(UserGlyphs {
 		ascii_symbols: args.ascii_symbols,
+		stashed: args.symbol_stashed,
+		unpulled: args.symbol_unpulled,
 		unpushed: args.symbol_unpushed,
 		renamed: args.symbol_renamed,
 		staged: args.symbol_staged,
@@ -61,6 +71,13 @@ pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<Stri
 		unstaged: args.symbol_unstaged,
 		deleted: args.symbol_deleted,
 	});
+	add_if_positive(&mut elements, colors.stashed, glyphs.stashed, stat.stashed);
+	add_if_positive(
+		&mut elements,
+		colors.unpulled,
+		glyphs.unpulled,
+		stat.unpulled,
+	);
 	add_if_positive(
 		&mut elements,
 		colors.unpushed,
