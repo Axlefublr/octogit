@@ -110,30 +110,22 @@ Usage: octussy [OPTIONS]
 Options:
   -v, --verbose
           octussy doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
-
           When you do want to see the errors, use this flag.
 
       --ascii-symbols
           octussy uses nerd font symbols for some elements by default.
-
           Use this flag if you don't use a nerd font.
-
           You can see both the nerd and ascii defaults for every category later down in this help.
 
       --test
           Will print every single element.
-
           Helpful for testing the output without having to be in a git directory with certain changes.
 
       --color-all-commits <COLOR_ALL_COMMITS>
           [default: yellow]
-
           For every color, you can either specify one of the main 8 colors from your terminal color scheme:
-
           black, red, green, yellow, blue, purple, cyan, white
-
           Or a hex code, without the # symbol like: FFAFD7
-
           For both hex codes and color names, the cAsE doesn't matter
 
       --color-all-staged <COLOR_ALL_STAGED>
@@ -201,6 +193,30 @@ Options:
 
       --symbol-deleted <SYMBOL_DELETED>
           [default: 󰍴 or -]
+
+      --remove-stashed
+          Remove an element from outputting to stdout using the following flags.
+          Keep in mind, everything still gets processed, so you won't get a speed boost.
+          If you remove something, you will then just lack that information, instead of it getting transferred to another element, like you may expect.
+          Helpful if you really hate staged deletions specifically. /s
+
+      --remove-unpulled
+
+      --remove-unpushed
+
+      --remove-renamed
+
+      --remove-staged
+
+      --remove-added
+
+      --remove-staged-deleted
+
+      --remove-modified
+
+      --remove-unstaged
+
+      --remove-deleted
 
   -h, --help
           Print help (see a summary with '-h')
