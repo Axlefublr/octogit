@@ -1,2 +1,1 @@
-Add stashes element
-Add unpulled commits element
+Add ability to remove elements (Closes #2)
