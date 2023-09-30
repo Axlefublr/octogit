@@ -86,6 +86,20 @@ In other words, your prompt will still continue to work via using defaults, if t
 
 This prevents you from having a broken shell prompt because you specified an incorrect argument, for example.
 
+If there's any element that you don't want to see, you can remove it: `octussy --remove-unpulled --remove-deleted`
+
+![](img/remove.png)
+
+Keep in mind that all the git commands required to get the elements still get executed, so you won't get a speed boost by removing some elements.
+
+The information of a deleted element will also **not** get transferred to another element.
+
+In some more known shell prompt vcs, all staged changes are displayed in a single element.
+
+In octussy, however, if you remove an element, you will then just lack that information.
+
+Useful if you hate seeing stashes, for example.
+
 ## Usage
 
 ```

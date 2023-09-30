@@ -99,4 +99,32 @@ pub struct Args {
 	/// [default: 󰍴 or -]
 	#[arg(long)]
 	pub symbol_deleted: Option<String>,
+
+	/// Remove an element from outputting to stdout using the following flags.
+	///
+	/// Keep in mind, everything still gets processed, so you won't get a speed boost.
+	///
+	/// If you remove something, you will then just lack that information, instead of it getting transferred to another element, like you may expect.
+	///
+	/// Helpful if you really hate staged deletions specifically. /s
+	#[arg(long)]
+	pub remove_stashed: bool,
+	#[arg(long)]
+	pub remove_unpulled: bool,
+	#[arg(long)]
+	pub remove_unpushed: bool,
+	#[arg(long)]
+	pub remove_renamed: bool,
+	#[arg(long)]
+	pub remove_staged: bool,
+	#[arg(long)]
+	pub remove_added: bool,
+	#[arg(long)]
+	pub remove_staged_deleted: bool,
+	#[arg(long)]
+	pub remove_modified: bool,
+	#[arg(long)]
+	pub remove_unstaged: bool,
+	#[arg(long)]
+	pub remove_deleted: bool,
 }

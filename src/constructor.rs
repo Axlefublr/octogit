@@ -2,6 +2,7 @@ use self::colorizer::ChosenColors;
 use self::glyphizer::ChosenGlyphs;
 use self::input::UserColors;
 use self::input::UserGlyphs;
+use self::input::UserRemoves;
 use crate::args::Args;
 use crate::parser::Stats;
 use ansi_term::ANSIString;
@@ -9,6 +10,8 @@ use ansi_term::Color;
 
 mod colorizer;
 mod glyphizer;
+mod removizer;
+
 mod input {
 	pub struct UserColors {
 		pub all_commits: Option<String>,
@@ -39,10 +42,37 @@ mod input {
 		pub unstaged: Option<String>,
 		pub deleted: Option<String>,
 	}
+
+	pub struct UserRemoves {
+		pub stashed: bool,
+		pub unpulled: bool,
+		pub unpushed: bool,
+		pub renamed: bool,
+		pub staged: bool,
+		pub added: bool,
+		pub staged_deleted: bool,
+		pub modified: bool,
+		pub unstaged: bool,
+		pub deleted: bool,
+	}
 }
 
-pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<String>) {
+pub fn construct(mut stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<String>) {
 	let mut elements: Vec<ANSIString<'static>> = vec![];
+
+	stat.reset(UserRemoves {
+		stashed: args.remove_stashed,
+		unpulled: args.remove_unpulled,
+		unpushed: args.remove_unpushed,
+		renamed: args.remove_renamed,
+		staged: args.remove_staged,
+		added: args.remove_added,
+		staged_deleted: args.remove_staged_deleted,
+		modified: args.remove_modified,
+		unstaged: args.remove_unstaged,
+		deleted: args.remove_deleted,
+	});
+
 	let (colors, user_errors) = ChosenColors::from(UserColors {
 		all_commits: args.color_all_commits,
 		all_staged: args.color_all_staged,
@@ -58,6 +88,7 @@ pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<Stri
 		unstaged: args.color_unstaged,
 		deleted: args.color_deleted,
 	});
+
 	let glyphs = ChosenGlyphs::from(UserGlyphs {
 		ascii_symbols: args.ascii_symbols,
 		stashed: args.symbol_stashed,
@@ -71,6 +102,7 @@ pub fn construct(stat: Stats, args: Args) -> (Vec<ANSIString<'static>>, Vec<Stri
 		unstaged: args.symbol_unstaged,
 		deleted: args.symbol_deleted,
 	});
+
 	add_if_positive(&mut elements, colors.stashed, glyphs.stashed, stat.stashed);
 	add_if_positive(
 		&mut elements,
