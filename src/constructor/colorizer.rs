@@ -1,17 +1,17 @@
-use ansi_term::Color;
 use super::input::UserColors;
+use ansi_term::Color;
 
 mod default;
 
 pub struct ChosenColors {
 	pub unpushed: Color,
 	pub renamed: Color,
-	pub added: Color,
 	pub staged: Color,
+	pub added: Color,
 	pub staged_deleted: Color,
 	pub modified: Color,
-	pub deleted: Color,
 	pub unstaged: Color,
+	pub deleted: Color,
 }
 
 impl ChosenColors {
@@ -21,21 +21,21 @@ impl ChosenColors {
 		let all_staged = handle_color(user.all_staged, default::GREEN, &mut errors);
 		let all_unstaged = handle_color(user.all_unstaged, default::CYAN, &mut errors);
 		let renamed = handle_color(user.renamed, all_staged, &mut errors);
-		let added = handle_color(user.added, all_staged, &mut errors);
 		let staged = handle_color(user.staged, all_staged, &mut errors);
+		let added = handle_color(user.added, all_staged, &mut errors);
 		let staged_deleted = handle_color(user.staged_deleted, all_staged, &mut errors);
 		let modified = handle_color(user.modified, all_unstaged, &mut errors);
-		let deleted = handle_color(user.deleted, all_unstaged, &mut errors);
 		let unstaged = handle_color(user.unstaged, all_unstaged, &mut errors);
+		let deleted = handle_color(user.deleted, all_unstaged, &mut errors);
 		let chosen = Self {
 			unpushed,
 			renamed,
-			added,
 			staged,
+			added,
 			staged_deleted,
 			modified,
-			deleted,
 			unstaged,
+			deleted,
 		};
 		(chosen, errors)
 	}
