@@ -1,16 +1,2 @@
-Use ! for both modified elements in ascii mode
-Unstaged modifications use 
-Renames use 󰕍
-Both additions use a bigger plus sign 󰐕
-Both deletions use a bigger minus 󰍴
-Unpushed commits use a different up arrow 
-
-Change ordering of the elements to:
-1. unpushed
-2. renamed
-3. staged
-4. added
-5. staged deletetions
-6. modified
-7. unstaged
-8. deleted
+Add stashes element
+Add unpulled commits element
