@@ -119,7 +119,10 @@ mod tests {
 		assert_eq!(default::RENAMED_NERD.to_string(), chosen.renamed);
 		assert_eq!(default::STAGED_NERD.to_string(), chosen.staged);
 		assert_eq!(default::ADDED_NERD.to_string(), chosen.added);
-		assert_eq!(default::STAGED_DELETED_NERD.to_string(), chosen.staged_deleted);
+		assert_eq!(
+			default::STAGED_DELETED_NERD.to_string(),
+			chosen.staged_deleted
+		);
 		assert_eq!(default::MODIFIED_NERD.to_string(), chosen.modified);
 		assert_eq!(default::UNSTAGED_NERD.to_string(), chosen.unstaged);
 		assert_eq!(default::DELETED_NERD.to_string(), chosen.deleted);

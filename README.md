@@ -13,7 +13,7 @@ function fish_prompt
 end
 ```
 
-By default, octussy will print this output to stdout (if you have every single type of change in your current git directory), without a newline at the end:
+By default, octussy will print this output to stdout (if you had every single type of change in your current git directory), without a newline at the end:
 
 `octussy --test`
 
@@ -23,12 +23,12 @@ The meanings of every element in order:
 
 1. Commits you haven't yet pushed to the remote
 2. Staged renamed files
-3. Staged new files
-4. Staged deletions
-5. Staged modifications
+3. Staged modifications
+4. Staged new files
+5. Staged deletions
 6. Unstaged modifications
-7. Unstaged deletions
-8. Unstaged new files
+7. Unstaged new files
+8. Unstaged deletions
 
 It uses nerd font symbols for some of the elements.
 
@@ -93,28 +93,31 @@ Usage: octussy [OPTIONS]
 
 Options:
   -v, --verbose
-          octussy doesn't print errors by default, because it's supposed to be in
-          your shell prompt constantly.
+          octussy doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
+          
           When you do want to see the errors, use this flag.
 
       --ascii-symbols
           octussy uses nerd font symbols for some elements by default.
+          
           Use this flag if you don't use a nerd font.
-          You can see both the nerd and ascii defaults for every category later down 
-          in this help.
+          
+          You can see both the nerd and ascii defaults for every category later down in this help.
 
       --test
           Will print every single element.
-          Helpful for testing the output without having to be in a git directory with 
-          certain changes.
+          
+          Helpful for testing the output without having to be in a git directory with certain changes.
 
       --color-unpushed <COLOR_UNPUSHED>
           [default: yellow]
-
-          For every color, you can either specify one of the main 8 colors from your 
-          terminal color scheme:
+          
+          For every color, you can either specify one of the main 8 colors from your terminal color scheme:
+          
           black, red, green, yellow, blue, purple, cyan, white
+          
           Or a hex code, without the # symbol like: FFAFD7
+          
           For both hex codes and color names, the cAsE doesn't matter
 
       --color-all-staged <COLOR_ALL_STAGED>
@@ -126,10 +129,10 @@ Options:
       --color-renamed <COLOR_RENAMED>
           [default: --color-all-staged]
 
-      --color-added <COLOR_ADDED>
+      --color-staged <COLOR_STAGED>
           [default: --color-all-staged]
 
-      --color-staged <COLOR_STAGED>
+      --color-added <COLOR_ADDED>
           [default: --color-all-staged]
 
       --color-staged-deleted <COLOR_STAGED_DELETED>
@@ -138,35 +141,35 @@ Options:
       --color-modified <COLOR_MODIFIED>
           [default: --color-all-unstaged]
 
-      --color-deleted <COLOR_DELETED>
-          [default: --color-all-unstaged]
-
       --color-unstaged <COLOR_UNSTAGED>
           [default: --color-all-unstaged]
 
+      --color-deleted <COLOR_DELETED>
+          [default: --color-all-unstaged]
+
       --symbol-unpushed <SYMBOL_UNPUSHED>
-          [default:  or >]
+          [default:  or >]
 
       --symbol-renamed <SYMBOL_RENAMED>
-          [default: 󰹹 or &]
-
-      --symbol-added <SYMBOL_ADDED>
-          [default: +]
+          [default: 󰕍 or &]
 
       --symbol-staged <SYMBOL_STAGED>
-          [default: 󰄬 or *]
+          [default: 󰄬 or !]
+
+      --symbol-added <SYMBOL_ADDED>
+          [default: 󰐕 or +]
 
       --symbol-staged-deleted <SYMBOL_STAGED_DELETED>
-          [default:  or ×]
+          [default: 󰍴 or -]
 
       --symbol-modified <SYMBOL_MODIFIED>
-          [default: !]
-
-      --symbol-deleted <SYMBOL_DELETED>
-          [default:  or ×]
+          [default:  or !]
 
       --symbol-unstaged <SYMBOL_UNSTAGED>
-          [default: ?]
+          [default: 󰐕 or +]
+
+      --symbol-deleted <SYMBOL_DELETED>
+          [default: 󰍴 or -]
 
   -h, --help
           Print help (see a summary with '-h')

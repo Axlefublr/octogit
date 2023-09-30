@@ -43,10 +43,10 @@ pub struct Args {
 	pub color_renamed: Option<String>,
 	/// [default: --color-all-staged]
 	#[arg(long)]
-	pub color_added: Option<String>,
+	pub color_staged: Option<String>,
 	/// [default: --color-all-staged]
 	#[arg(long)]
-	pub color_staged: Option<String>,
+	pub color_added: Option<String>,
 	/// [default: --color-all-staged]
 	#[arg(long)]
 	pub color_staged_deleted: Option<String>,
@@ -55,33 +55,33 @@ pub struct Args {
 	pub color_modified: Option<String>,
 	/// [default: --color-all-unstaged]
 	#[arg(long)]
-	pub color_deleted: Option<String>,
+	pub color_unstaged: Option<String>,
 	/// [default: --color-all-unstaged]
 	#[arg(long)]
-	pub color_unstaged: Option<String>,
+	pub color_deleted: Option<String>,
 
-	/// [default:  or >]
+	/// [default:  or >]
 	#[arg(long)]
 	pub symbol_unpushed: Option<String>,
-	/// [default: 󰹹 or &]
+	/// [default: 󰕍 or &]
 	#[arg(long)]
 	pub symbol_renamed: Option<String>,
-	/// [default: +]
-	#[arg(long)]
-	pub symbol_added: Option<String>,
-	/// [default: 󰄬 or *]
+	/// [default: 󰄬 or !]
 	#[arg(long)]
 	pub symbol_staged: Option<String>,
-	/// [default:  or ×]
+	/// [default: 󰐕 or +]
+	#[arg(long)]
+	pub symbol_added: Option<String>,
+	/// [default: 󰍴 or -]
 	#[arg(long)]
 	pub symbol_staged_deleted: Option<String>,
-	/// [default: !]
+	/// [default:  or !]
 	#[arg(long)]
 	pub symbol_modified: Option<String>,
-	/// [default:  or ×]
-	#[arg(long)]
-	pub symbol_deleted: Option<String>,
-	/// [default: ?]
+	/// [default: 󰐕 or +]
 	#[arg(long)]
 	pub symbol_unstaged: Option<String>,
+	/// [default: 󰍴 or -]
+	#[arg(long)]
+	pub symbol_deleted: Option<String>,
 }
