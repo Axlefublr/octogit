@@ -1,1 +1,1 @@
-Add ability to remove elements (Closes #2)
+Fix stashes element not appearing if either unpulled or unpushed elements throw an error.
