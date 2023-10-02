@@ -15,12 +15,12 @@ pub struct Stats {
 }
 
 impl Stats {
-	pub fn compute(git_status: String, commits: Commits) -> Option<Self> {
+	pub fn compute(git_status: String, commits: Commits, stashes: usize) -> Option<Self> {
 		let mut stats = Stats::default();
 		if !git_status.is_empty() {
 			parse_status(git_status, &mut stats)?;
 		}
-		stats.stashed = commits.stashes;
+		stats.stashed = stashes;
 		stats.unpulled = commits.unpulled;
 		stats.unpushed = commits.unpushed;
 		if are_all_zero(&stats) {

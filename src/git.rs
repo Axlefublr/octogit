@@ -74,7 +74,7 @@ fn branch() -> Result<String, String> {
 	}
 }
 
-fn stashes() -> Result<usize, String> {
+pub fn stashes() -> Result<usize, String> {
 	let output = match Command::new("git").arg("stash").arg("list").output() {
 		Err(_) => return Err("`git` is not in your $PATH".to_owned()),
 		Ok(v) => v,
@@ -121,7 +121,6 @@ fn rev_list(range: &str) -> Result<usize, String> {
 pub struct Commits {
 	pub unpulled: usize,
 	pub unpushed: usize,
-	pub stashes: usize,
 }
 
 pub fn get_commits() -> Result<Commits, String> {
@@ -129,9 +128,7 @@ pub fn get_commits() -> Result<Commits, String> {
 	let branch = branch()?;
 	let unpulled = rev_list(&format!("{0}..{1}/{0}", &branch, &remote))?;
 	let unpushed = rev_list(&format!("{1}/{0}..{0}", &branch, &remote))?;
-	let stashes = stashes()?;
 	Ok(Commits {
-		stashes,
 		unpulled,
 		unpushed,
 	})

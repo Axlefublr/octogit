@@ -30,10 +30,19 @@ fn main() {
 			Commits::default()
 		}
 	};
+	let stashes = match git::stashes() {
+		Ok(stashes) => stashes,
+		Err(message) => {
+			if verbose {
+				eprintln!("{}", message);
+			}
+			0
+		}
+	};
 	let stats = if args.test {
 		Some(Stats::one())
 	} else {
-		Stats::compute(git_status, commits)
+		Stats::compute(git_status, commits, stashes)
 	};
 	if let Some(stats) = stats {
 		let (elements, user_errors) = constructor::construct(stats, args);
