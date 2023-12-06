@@ -227,12 +227,8 @@ Options:
 
 ## Install
 
-With binstall, if you have it:
-```
-cargo binstall octussy
-```
-
-With default cargo, if you don't:
 ```
 cargo install octussy
 ```
+
+`cargo-binstall` and `cargo-quickinstall` are also supported
