@@ -1,1 +1,0 @@
-Fix stashes element not appearing if either unpulled or unpushed elements throw an error.
