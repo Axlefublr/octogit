@@ -1,13 +1,13 @@
 [package]
-name = "octussy"
+name = "octogit"
 version = "1.0.2"
 edition = "2021"
 authors = ["Axlefublr"]
 license = "MIT"
 description = "A simple executable git status for your shell prompt"
 readme = "README.md"
-homepage = "https://github.com/Axlefublr/octussy"
-repository = "https://github.com/Axlefublr/octussy"
+homepage = "https://github.com/Axlefublr/octogit"
+repository = "https://github.com/Axlefublr/octogit"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

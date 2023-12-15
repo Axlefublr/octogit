@@ -3,12 +3,12 @@ use clap::Parser;
 #[derive(Parser)]
 #[command(author, about, version)]
 pub struct Args {
-    /// octussy doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
+    /// octogit doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
     ///
     /// When you do want to see the errors, use this flag.
     #[arg(short, long)]
     pub verbose: bool,
-    /// octussy uses nerd font symbols for some elements by default.
+    /// octogit uses nerd font symbols for some elements by default.
     ///
     /// Use this flag if you don't use a nerd font.
     ///

@@ -1,5 +1,4 @@
-# Octussy
-Yes, it's referring exactly to what you think it does.
+# Octogit
 
 This program is what I use to display git status in my shell prompt.
 
@@ -9,15 +8,15 @@ In fish, that would be something like this:
 ```fish
 function fish_prompt
 	printf (pwd)' '
-	octussy
+	octogit
 end
 ```
 
-By default, octussy will print this output to stdout (if you had every single type of change in your current git directory), with a space but not a newline at the end:
+By default, octogit will print this output to stdout (if you had every single type of change in your current git directory), with a space but not a newline at the end:
 
-`octussy --test`
+`octogit --test`
 
-![](img/octussy-default-nerd.png)
+![](img/octogit-default-nerd.png)
 
 The meanings of every element in order:
 
@@ -36,11 +35,11 @@ It uses nerd font symbols for some of the elements.
 
 If you don't want to use a nerd font, use the `--ascii-symbols` flag:
 
-`octussy --test --ascii-symbols`
+`octogit --test --ascii-symbols`
 
-![](img/octussy-default-ascii.png)
+![](img/octogit-default-ascii.png)
 
-Only the elements that are at least one are printed, making testing how octussy fully looks kinda annoying. That's why the `--test` flag exists – you get to see the entire output of octussy regardless of how many changes your current git directory actually has.
+Only the elements that are at least one are printed, making testing how octogit fully looks kinda annoying. That's why the `--test` flag exists – you get to see the entire output of octogit regardless of how many changes your current git directory actually has.
 
 By default, commits (stashes, unpulled, unpushed) are shown in yellow, staged changes in green, and unstaged changes in cyan, following your terminal's color scheme.
 
@@ -48,29 +47,29 @@ You can change each category's default to any one of these 8 colors:
 
 black, red, green, yellow, blue, purple, cyan, white
 
-`octussy --color-all-staged purple`
+`octogit --color-all-staged purple`
 
 ![](img/staged-purple-word.png)
 
-Or by providing a hex color: `octussy --color-all-staged AF87FF`
+Or by providing a hex color: `octogit --color-all-staged AF87FF`
 
 ![](img/staged-purple-hex.png)
 
 The cAsE of colors doesn't matter.
 
-You can then override the default for specific elements, if you want to: `octussy --color-all-unstaged blue --color-deleted red`
+You can then override the default for specific elements, if you want to: `octogit --color-all-unstaged blue --color-deleted red`
 
 ![](img/unstaged-blue-deleted-red.png)
 
-Same thing applies to the [glyphs used](https://www.nerdfonts.com/cheat-sheet): `octussy --symbol-unpushed 󰤇 --symbol-deleted 󱇪`
+Same thing applies to the [glyphs used](https://www.nerdfonts.com/cheat-sheet): `octogit --symbol-unpushed 󰤇 --symbol-deleted 󱇪`
 
 ![](img/symbol-rabbit-unpushed-spider-deleted.png)
 
-Interestingly, you're not restricted to a single character. So it could be a whole word, if you want to!: `octussy --symbol-unpushed meow`
+Interestingly, you're not restricted to a single character. So it could be a whole word, if you want to!: `octogit --symbol-unpushed meow`
 
 ![](img/unpushed-custom-word.png)
 
-A similar thing happens for colors: `octussy --color-staged-deleted '87FF5F this is my brigher green that I want to use for this element'`
+A similar thing happens for colors: `octogit --color-staged-deleted '87FF5F this is my brigher green that I want to use for this element'`
 
 ![](img/sentence.png)
 
@@ -78,7 +77,7 @@ Despite putting an entire sentence into the flag, only the hex color is used, ig
 
 Since this program is something you're going to use in your shell prompt, it doesn't print error messages by default. If something isn't working correctly, use the `-v`/`--verbose` flag interactively to check what's wrong:
 
-`octussy -v --test --color-unstaged 'non-existent-color'`
+`octogit -v --test --color-unstaged 'non-existent-color'`
 
 ![](img/incorrect-hex-color.png)
 
@@ -86,7 +85,7 @@ In other words, your prompt will still continue to work via using defaults, if t
 
 This prevents you from having a broken shell prompt because you specified an incorrect argument, for example.
 
-If there's any element that you don't want to see, you can remove it: `octussy --remove-unpulled --remove-deleted`
+If there's any element that you don't want to see, you can remove it: `octogit --remove-unpulled --remove-deleted`
 
 ![](img/remove.png)
 
@@ -96,24 +95,24 @@ The information of a deleted element will also **not** get transferred to anothe
 
 In some more known shell prompt vcs, all staged changes are displayed in a single element.
 
-In octussy, however, if you remove an element, you will then just lack that information.
+In octogit, however, if you remove an element, you will then just lack that information.
 
 Useful if you hate seeing stashes, for example.
 
-## Usage
+# Usage
 
 ```
 A simple executable git status for your shell prompt
 
-Usage: octussy [OPTIONS]
+Usage: octogit [OPTIONS]
 
 Options:
   -v, --verbose
-          octussy doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
+          octogit doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
           When you do want to see the errors, use this flag.
 
       --ascii-symbols
-          octussy uses nerd font symbols for some elements by default.
+          octogit uses nerd font symbols for some elements by default.
           Use this flag if you don't use a nerd font.
           You can see both the nerd and ascii defaults for every category later down in this help.
 
@@ -225,10 +224,16 @@ Options:
           Print version
 ```
 
-## Install
+# Install
 
 ```
-cargo install octussy
+cargo install octogit
 ```
 
 `cargo-binstall` and `cargo-quickinstall` are also supported
+
+# Uninstall
+
+```
+cargo uninstall octogit
+```
