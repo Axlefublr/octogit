@@ -16,7 +16,7 @@ fn main() {
         if verbose {
             eprintln!("{}", message);
         }
-        String::from("")
+        String::default()
     });
     let commits = git::get_commits().unwrap_or_else(|message| {
         if verbose {
@@ -28,7 +28,7 @@ fn main() {
         if verbose {
             eprintln!("{}", message);
         }
-        0
+        usize::default()
     });
     let stats = if args.test {
         Some(Stats::one())

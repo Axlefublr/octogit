@@ -1,10 +1,11 @@
 use std::process::Command;
 
 pub fn status() -> Result<String, String> {
-    let output = match Command::new("git").arg("status").arg("--porcelain").output() {
-        Err(_) => return Err("`git` is not in your $PATH".to_owned()),
-        Ok(v) => v,
-    };
+    let output = Command::new("git")
+        .arg("status")
+        .arg("--porcelain")
+        .output()
+        .map_err(|_| "`git` is not in your $PATH")?;
     if !output.status.success() {
         return Err(String::from_utf8(output.stderr)
             .expect("git status stderr should convert to a string")
@@ -19,10 +20,10 @@ pub fn status() -> Result<String, String> {
 }
 
 fn remote() -> Result<String, String> {
-    let output = match Command::new("git").arg("remote").output() {
-        Err(_) => return Err("`git` is not in your $PATH".to_owned()),
-        Ok(v) => v,
-    };
+    let output = Command::new("git")
+        .arg("remote")
+        .output()
+        .map_err(|_| "`git` is not in your $PATH")?;
     if !output.status.success() {
         return Err(String::from_utf8(output.stderr)
             .expect("git remote stderr should convert to a string")
@@ -45,10 +46,11 @@ fn remote() -> Result<String, String> {
 }
 
 fn branch() -> Result<String, String> {
-    let output = match Command::new("git").arg("branch").arg("--show-current").output() {
-        Err(_) => return Err("`git` is not in your $PATH".to_owned()),
-        Ok(v) => v,
-    };
+    let output = Command::new("git")
+        .arg("branch")
+        .arg("--show-current")
+        .output()
+        .map_err(|_| "`git` is not in your $PATH")?;
     if !output.status.success() {
         return Err(String::from_utf8(output.stderr)
             .expect("git branch stderr should convert to a string")
@@ -67,10 +69,11 @@ fn branch() -> Result<String, String> {
 }
 
 pub fn stashes() -> Result<usize, String> {
-    let output = match Command::new("git").arg("stash").arg("list").output() {
-        Err(_) => return Err("`git` is not in your $PATH".to_owned()),
-        Ok(v) => v,
-    };
+    let output = Command::new("git")
+        .arg("stash")
+        .arg("list")
+        .output()
+        .map_err(|_| "`git` is not in your $PATH")?;
     if !output.status.success() {
         return Err(String::from_utf8(output.stderr)
             .expect("git stash stderr failed to convert to a string")
@@ -86,15 +89,12 @@ pub fn stashes() -> Result<usize, String> {
 }
 
 fn rev_list(range: &str) -> Result<usize, String> {
-    let output = match Command::new("git")
+    let output = Command::new("git")
         .arg("rev-list")
         .arg("--count")
         .arg(range)
         .output()
-    {
-        Err(_) => return Err("`git` is not in your $PATH".to_owned()),
-        Ok(v) => v,
-    };
+        .map_err(|_| "`git` is not in your $PATH")?;
     if !output.status.success() {
         return Err(String::from_utf8(output.stderr)
             .expect("git rev-list stderr failed to convert to a string")
