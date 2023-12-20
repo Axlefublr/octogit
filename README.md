@@ -7,8 +7,8 @@ The way you use it is by putting the binary somewhere in your shell prompt, so i
 In fish, that would be something like this:
 ```fish
 function fish_prompt
-	printf (pwd)' '
-	octogit
+    printf (pwd)' '
+    octogit
 end
 ```
 
@@ -99,132 +99,105 @@ In octogit, however, if you remove an element, you will then just lack that info
 
 Useful if you hate seeing stashes, for example.
 
-# Usage
+## Usage
 
 ```
-A simple executable git status for your shell prompt
+A simple executable git status for your shell prompt.
 
 Usage: octogit [OPTIONS]
 
 Options:
   -v, --verbose
-          octogit doesn't print errors by default, because it's supposed to be in your shell prompt constantly.
-          When you do want to see the errors, use this flag.
-
+          octogit doesn't print errors by default, because it's supposed to be in
+          your shell prompt constantly. When you do want to see the errors, use this
+          flag
       --ascii-symbols
-          octogit uses nerd font symbols for some elements by default.
-          Use this flag if you don't use a nerd font.
-          You can see both the nerd and ascii defaults for every category later down in this help.
-
+          octogit uses nerd font symbols for some elements by default. Use this flag
+          if you don't use a nerd font. You can see both the nerd and ascii defaults
+          for every category later down in this help
       --test
-          Will print every single element.
-          Helpful for testing the output without having to be in a git directory with certain changes.
-
+          Will print every single element. Helpful for testing the output without
+          having to be in a git directory with certain changes
       --color-all-commits <COLOR_ALL_COMMITS>
-          [default: yellow]
-          For every color, you can either specify one of the main 8 colors from your terminal color scheme:
-          black, red, green, yellow, blue, purple, cyan, white
-          Or a hex code, without the # symbol like: FFAFD7
-          For both hex codes and color names, the cAsE doesn't matter
-
+          [default: yellow] For every color, you can either specify one of the main
+          8 colors from your terminal color scheme: black, red, green, yellow, blue,
+          purple, cyan, white Or a hex code, without the # symbol like: FFAFD7 For
+          both hex codes and color names, the cAsE doesn't matter
       --color-all-staged <COLOR_ALL_STAGED>
           [default: green]
-
       --color-all-unstaged <COLOR_ALL_UNSTAGED>
           [default: cyan]
-
       --color-stashed <COLOR_STASHED>
           [default: --color-all-commits]
-
       --color-unpulled <COLOR_UNPULLED>
           [default: --color-all-commits]
-
       --color-unpushed <COLOR_UNPUSHED>
           [default: --color-all-commits]
-
       --color-renamed <COLOR_RENAMED>
           [default: --color-all-staged]
-
       --color-staged <COLOR_STAGED>
           [default: --color-all-staged]
-
       --color-added <COLOR_ADDED>
           [default: --color-all-staged]
-
       --color-staged-deleted <COLOR_STAGED_DELETED>
           [default: --color-all-staged]
-
       --color-modified <COLOR_MODIFIED>
           [default: --color-all-unstaged]
-
       --color-unstaged <COLOR_UNSTAGED>
           [default: --color-all-unstaged]
-
       --color-deleted <COLOR_DELETED>
           [default: --color-all-unstaged]
-
       --symbol-stashed <SYMBOL_STASHED>
           [default: 󰟫 or *]
-
       --symbol-unpulled <SYMBOL_UNPULLED>
           [default:  or <]
-
       --symbol-unpushed <SYMBOL_UNPUSHED>
           [default:  or >]
-
       --symbol-renamed <SYMBOL_RENAMED>
           [default: 󰕍 or &]
-
       --symbol-staged <SYMBOL_STAGED>
           [default: 󰄬 or !]
-
       --symbol-added <SYMBOL_ADDED>
           [default: 󰐕 or +]
-
       --symbol-staged-deleted <SYMBOL_STAGED_DELETED>
           [default: 󰍴 or -]
-
       --symbol-modified <SYMBOL_MODIFIED>
           [default:  or !]
-
       --symbol-unstaged <SYMBOL_UNSTAGED>
           [default: 󰐕 or +]
-
       --symbol-deleted <SYMBOL_DELETED>
           [default: 󰍴 or -]
-
       --remove-stashed
           Remove an element from outputting to stdout using the following flags.
-          Keep in mind, everything still gets processed, so you won't get a speed boost.
-          If you remove something, you will then just lack that information, instead of it getting transferred to another element, like you may expect.
+          Keep in mind, everything still gets processed, so you won't get a speed
+          boost. If you remove something, you will then just lack that information,
+          instead of it getting transferred to another element, like you may expect.
           Helpful if you really hate staged deletions specifically. /s
-
       --remove-unpulled
-
+          
       --remove-unpushed
-
+          
       --remove-renamed
-
+          
       --remove-staged
-
+          
       --remove-added
-
+          
       --remove-staged-deleted
-
+          
       --remove-modified
-
+          
       --remove-unstaged
-
+          
       --remove-deleted
-
+          
   -h, --help
-          Print help (see a summary with '-h')
-
+          Print help
   -V, --version
           Print version
 ```
 
-# Install
+## Install
 
 ```
 cargo install octogit
@@ -232,7 +205,7 @@ cargo install octogit
 
 `cargo-binstall` and `cargo-quickinstall` are also supported
 
-# Uninstall
+## Uninstall
 
 ```
 cargo uninstall octogit

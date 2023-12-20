@@ -4,7 +4,7 @@ version = "2.0.2"
 edition = "2021"
 authors = ["Axlefublr"]
 license = "MIT"
-description = "A simple executable git status for your shell prompt"
+description = "A simple executable git status for your shell prompt."
 readme = "README.md"
 homepage = "https://github.com/Axlefublr/octogit"
 repository = "https://github.com/Axlefublr/octogit"
@@ -13,5 +13,5 @@ repository = "https://github.com/Axlefublr/octogit"
 
 [dependencies]
 ansi_term = "0.12.1"
-clap = { version = "4.3.19", features = ["derive"] }
+clap = { version = "4.4.11", features = ["derive", "wrap_help"] }
 hex = "0.4.3"
