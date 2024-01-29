@@ -1,28 +1,32 @@
-use super::input::UserColors;
 use ansi_term::Color;
+
+use super::input::UserColors;
 
 mod default;
 
 pub struct ChosenColors {
-    pub stashed: Color,
-    pub unpulled: Color,
-    pub unpushed: Color,
-    pub renamed: Color,
-    pub staged: Color,
-    pub added: Color,
+    pub stashed:        Color,
+    pub unpulled:       Color,
+    pub unpushed:       Color,
+    pub renamed:        Color,
+    pub staged:         Color,
+    pub added:          Color,
     pub staged_deleted: Color,
-    pub modified: Color,
-    pub unstaged: Color,
-    pub deleted: Color,
+    pub modified:       Color,
+    pub unstaged:       Color,
+    pub deleted:        Color,
 }
 
 impl ChosenColors {
     pub fn from(user: UserColors) -> (Self, Vec<String>) {
         let mut errors = vec![];
 
-        let all_commits = handle_color(user.all_commits, default::YELLOW, &mut errors);
-        let all_staged = handle_color(user.all_staged, default::GREEN, &mut errors);
-        let all_unstaged = handle_color(user.all_unstaged, default::CYAN, &mut errors);
+        let all_commits =
+            handle_color(user.all_commits, default::YELLOW, &mut errors);
+        let all_staged =
+            handle_color(user.all_staged, default::GREEN, &mut errors);
+        let all_unstaged =
+            handle_color(user.all_unstaged, default::CYAN, &mut errors);
 
         let stashed = handle_color(user.stashed, all_commits, &mut errors);
         let unpulled = handle_color(user.unpulled, all_commits, &mut errors);
@@ -31,7 +35,8 @@ impl ChosenColors {
         let renamed = handle_color(user.renamed, all_staged, &mut errors);
         let staged = handle_color(user.staged, all_staged, &mut errors);
         let added = handle_color(user.added, all_staged, &mut errors);
-        let staged_deleted = handle_color(user.staged_deleted, all_staged, &mut errors);
+        let staged_deleted =
+            handle_color(user.staged_deleted, all_staged, &mut errors);
 
         let modified = handle_color(user.modified, all_unstaged, &mut errors);
         let unstaged = handle_color(user.unstaged, all_unstaged, &mut errors);
@@ -53,7 +58,11 @@ impl ChosenColors {
     }
 }
 
-fn handle_color(color: Option<String>, default: Color, errors: &mut Vec<String>) -> Color {
+fn handle_color(
+    color: Option<String>,
+    default: Color,
+    errors: &mut Vec<String>,
+) -> Color {
     let color = match color {
         Some(color) => color,
         None => return default,
@@ -65,7 +74,7 @@ fn handle_color(color: Option<String>, default: Color, errors: &mut Vec<String>)
                 errors.push(message);
             }
             default
-        }
+        },
     }
 }
 
@@ -81,13 +90,14 @@ fn parse_color(color: String) -> Result<Color, String> {
         "white" => Ok(Color::White),
         hex => {
             let hex = hex.to_owned();
-            let err_msg = Err(format!("hex color specified is incorrect: `{}`", &hex));
+            let err_msg =
+                Err(format!("hex color specified is incorrect: `{}`", &hex));
             let (red, green, blue) = match parse_hex(hex) {
                 Some(rgb) => rgb,
                 None => return err_msg,
             };
             Ok(Color::RGB(red, green, blue))
-        }
+        },
     }
 }
 
@@ -109,8 +119,11 @@ mod tests {
     #[test]
     fn parse_hex_from_str() {
         assert_eq!(
-            Some((0x8a, 0x5c, 0xe7)),
-            parse_hex("8a5ce7 hex color code first, then literally anything after".to_owned())
+            Some((0x8A, 0x5C, 0xE7)),
+            parse_hex(
+                "8a5ce7 hex color code first, then literally anything after"
+                    .to_owned()
+            )
         );
     }
 }

@@ -3,16 +3,16 @@ use super::input::UserGlyphs;
 mod default;
 
 pub struct ChosenGlyphs {
-    pub stashed: String,
-    pub unpulled: String,
-    pub unpushed: String,
-    pub renamed: String,
-    pub staged: String,
-    pub added: String,
+    pub stashed:        String,
+    pub unpulled:       String,
+    pub unpushed:       String,
+    pub renamed:        String,
+    pub staged:         String,
+    pub added:          String,
     pub staged_deleted: String,
-    pub modified: String,
-    pub unstaged: String,
-    pub deleted: String,
+    pub modified:       String,
+    pub unstaged:       String,
+    pub deleted:        String,
 }
 
 impl ChosenGlyphs {
@@ -139,7 +139,10 @@ mod tests {
         assert_eq!(default::RENAMED_NERD.to_string(), chosen.renamed);
         assert_eq!(default::STAGED_NERD.to_string(), chosen.staged);
         assert_eq!(default::ADDED_NERD.to_string(), chosen.added);
-        assert_eq!(default::STAGED_DELETED_NERD.to_string(), chosen.staged_deleted);
+        assert_eq!(
+            default::STAGED_DELETED_NERD.to_string(),
+            chosen.staged_deleted
+        );
         assert_eq!(default::MODIFIED_NERD.to_string(), chosen.modified);
         assert_eq!(default::UNSTAGED_NERD.to_string(), chosen.unstaged);
         assert_eq!(default::DELETED_NERD.to_string(), chosen.deleted);
